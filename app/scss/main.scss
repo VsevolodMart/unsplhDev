@@ -36,10 +36,13 @@ body {
     margin-top: 20px;
     height: 100%;
     .field {
-      border: 1px solid #ececec;
       float: left;
-      width: 73%;
-      height: 100%;
+      width: 890px;
+      height: 690px;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      align-items: stretch;
       img {
         width: 200px;
         height: 200px;

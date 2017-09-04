@@ -205,10 +205,31 @@ body .wrapper {
     margin-top: 20px;
     height: 100%; }
     body .wrapper .main .field {
-      border: 1px solid #ececec;
       float: left;
-      width: 73%;
-      height: 100%; }
+      width: 890px;
+      height: 690px;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-flow: row wrap;
+         -moz-box-orient: horizontal;
+         -moz-box-direction: normal;
+          -ms-flex-flow: row wrap;
+              flex-flow: row wrap;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+         -moz-box-pack: justify;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
+      -webkit-box-align: stretch;
+      -webkit-align-items: stretch;
+         -moz-box-align: stretch;
+          -ms-flex-align: stretch;
+              align-items: stretch; }
       body .wrapper .main .field img {
         width: 200px;
         height: 200px; }
