@@ -16,11 +16,7 @@ fetch('https://unsplash.it/list')
 		let api = response.json();
 		let field;
 		let img;
-		let imgArr = [];
-		let authorArr = [];
-		let heightArr = [];
-		let widthArr = [];
-		let idArr = [];
+		
 		
 		let btn = document.getElementsByTagName('P');
 		let Large;
@@ -66,7 +62,6 @@ fetch('https://unsplash.it/list')
 				let arr1 = arr[0].split('_');
 				imgArr.push(arr1[1]);
 				
-				console.log(imgArr);
 				
 				if (i >= 12) {
 				  return;
@@ -75,7 +70,7 @@ fetch('https://unsplash.it/list')
 				} else {
 				  field = document.querySelector('.field');
 				  img = document.createElement('IMG');
-				  img.src = 'https://source.unsplash.com/' + data.width + imgArr[i] ;
+				  img.src = 'https://source.unsplash.com/' + data.width + '/' +imgArr[i] ;
 				  field.appendChild(img);
 				}
 			  } else {
@@ -91,44 +86,26 @@ fetch('https://unsplash.it/list')
 		
 		api.then(function (data) {
 		  function createLarge() {
-			//clearField();
-			// for (let key in data) {
-			//   imgArr.push(data[key].filename);
-			//   authorArr.push(data[key].author);
-			//   heightArr.push(data[key].height);
-			//   widthArr.push(data[key].width);
-			//   idArr.push(data[key].id);
-			// }
-			//
-			// for (let i = 0; i < imgArr.length; i++) {
-			//   let width = widthArr[i];
-			//   parseInt(width);
-			//   if (width > 1500) {
-			// 	if (i >= 12) {
-			// 	  break;
-			// 	} else if (response.status != 200) {
-			// 	  continue;
-			// 	} else {
-			// 	  field = document.querySelector('.field');
-			// 	  img = document.createElement('IMG');
-			// 	  img.src = 'https://unsplash.it/' + imgArr[i];
-			// 	  field.appendChild(img);
-			// 	}
-			//   }
-			// }
+			let imgArr = [];
+			let authorArr = [];
+			let heightArr = [];
+			let widthArr = [];
+			let idArr = [];
 			
 			for (let i in data) {
 			  
 			  if (data[i].width >= 1500) {
 				widthArr.push(data.width);
 				imgArr.push(data.filename);
-				let end = imgArr[i].split('.');
-				imgArr.push(end);
-				let start = end[0];
-				let arr = start.split('_');
-				let fileName = arr[1];
-				imgArr.push(fileName);
-				
+			 
+				let array = data[i].filename;
+				let end = array.split('.');
+				let start = end[0].split('_');
+				imgArr.push(start[1]);
+				let fileName = imgArr[i];
+			 
+				console.log(imgArr[i]);
+			 
 				if (i >= 12) {
 				  break;
 				} else if (response.status != 200) {
