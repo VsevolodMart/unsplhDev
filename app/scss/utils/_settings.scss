@@ -1,0 +1,36 @@
+
+
+//flex
+
+@mixin flex-row() {
+  display: flex;
+  flex-flow: row wrap;
+}
+%flex-row {
+  @include flex-row;
+}
+@mixin flex-column() {
+  display: flex;
+  flex-flow: column wrap;
+}
+%flex-column {
+  @include flex-column;
+}
+@mixin before() {
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+%before {
+  @include before;
+}
+@mixin after() {
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+%after {
+  @include after;
+}
