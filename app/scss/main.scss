@@ -36,11 +36,12 @@ body {
     margin-top: 20px;
     height: 100%;
     .field {
+      overflow-Y: hidden;
       float: left;
       width: 890px;
       height: 690px;
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: row nowrap;
       justify-content: space-between;
       align-items: stretch;
       img {
