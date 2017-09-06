@@ -35,13 +35,15 @@ body {
   .main {
     margin-top: 20px;
     height: 100%;
+    position: relative;
     .field {
+      border: 1px solid #1b1b1b;
       overflow-Y: hidden;
       float: left;
       width: 890px;
       height: 690px;
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       justify-content: space-between;
       align-items: stretch;
       img {

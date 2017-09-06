@@ -46,56 +46,51 @@ fetch('https://unsplash.it/list')
 		// }
 		function randomShow() {
 		  api.then(function (data) {
-			
-			
+			let array = [];
 			let imgArr = [];
 			let authorArr = [];
 			let heightArr = [];
 			let widthArr = [];
 			let idArr = [];
 			
-			
-			
-			for(let k = 0; k < data.length; k++){
-			  widthArr.push(data[k].width);
-			  let array = data[k].filename;
+			for(let i = 0; i < data.length; i++){
+			  widthArr.push(data[i].width);
+			  let array = data[i].filename;
 			  let start = array.split('.');
-			  let end = start[0].split('_');
-			  imgArr.push(end[1]);
+			  let end = start[0].substring(5);
+			  imgArr.push(end);
 			}
 			
-			for(let o = 0; o < data.length; o++){
-			  console.log(data[o].filename);
-			}
+			let j = 0;
 			
-			let i = 0;
-		 
-			for(i; i < imgArr.length; i++) {
-			  mainField = document.querySelector('.main');
-			  field = document.createElement('DIV');
-			  field.className = "field";
-			  console.log('i ' +i);
-			  let j = 0;
-
-			  for(j; j < imgArr.length; j++) {
-				if(j < 12) {
+			function couter() {
+			  let count = 0;
+			  
+			  for(j ; j < imgArr.length; j++) {
+				if(count >= 12){
+				  count = 0;
+				  break;
+				} else {
 				  img = document.createElement('IMG');
 				  img.src = 'https://source.unsplash.com/' + imgArr[j];
 				  mainField.insertBefore(field, aside);
 				  field = document.querySelector('.field');
 				  field.appendChild(img);
+				  
+				  count++;
+				  j = j++;
 				}
-				else if (response.status != 200) {
-				  console.log('status hui');
-				  continue;
-				}
-				else {
-				  i = i;
-				  j = j;
-				  console.log('j ' + j);
-				  break;
-				}
+				console.log('j ' + j);
 			  }
+			}
+			
+			for(let i = 0; i < imgArr.length; i++) {
+			  mainField = document.querySelector('.main');
+			  field = document.createElement('DIV');
+			  field.className = "field";
+			  if(i > 2) break;
+			  
+			  couter();
 			}
 		  });
 		}

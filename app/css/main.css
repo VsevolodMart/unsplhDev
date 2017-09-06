@@ -203,8 +203,10 @@ body .wrapper {
               align-items: center; }
   body .wrapper .main {
     margin-top: 20px;
-    height: 100%; }
+    height: 100%;
+    position: relative; }
     body .wrapper .main .field {
+      border: 1px solid #1b1b1b;
       overflow-Y: hidden;
       float: left;
       width: 890px;
@@ -216,11 +218,11 @@ body .wrapper {
       display: flex;
       -webkit-box-orient: horizontal;
       -webkit-box-direction: normal;
-      -webkit-flex-flow: row nowrap;
+      -webkit-flex-flow: row wrap;
          -moz-box-orient: horizontal;
          -moz-box-direction: normal;
-          -ms-flex-flow: row nowrap;
-              flex-flow: row nowrap;
+          -ms-flex-flow: row wrap;
+              flex-flow: row wrap;
       -webkit-box-pack: justify;
       -webkit-justify-content: space-between;
          -moz-box-pack: justify;
