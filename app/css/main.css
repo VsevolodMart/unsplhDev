@@ -205,37 +205,27 @@ body .wrapper {
     margin-top: 20px;
     height: 100%;
     position: relative; }
-    body .wrapper .main .field {
+    body .wrapper .main .mainField {
+      overflow: hidden;
       border: 1px solid #1b1b1b;
-      overflow-Y: hidden;
       float: left;
-      width: 890px;
-      height: 690px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      -webkit-flex-flow: row wrap;
-         -moz-box-orient: horizontal;
-         -moz-box-direction: normal;
-          -ms-flex-flow: row wrap;
-              flex-flow: row wrap;
-      -webkit-box-pack: justify;
-      -webkit-justify-content: space-between;
-         -moz-box-pack: justify;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
-      -webkit-box-align: stretch;
-      -webkit-align-items: stretch;
-         -moz-box-align: stretch;
-          -ms-flex-align: stretch;
-              align-items: stretch; }
-      body .wrapper .main .field img {
-        width: 200px;
-        height: 200px; }
+      width: 852px;
+      height: 646px;
+      position: relative; }
+      body .wrapper .main .mainField .field {
+        position: relative;
+        width: 100%;
+        height: 646px;
+        -webkit-transition: left 500ms linear;
+        -o-transition: left 500ms linear;
+        -moz-transition: left 500ms linear;
+        transition: left 500ms linear; }
+        body .wrapper .main .mainField .field img {
+          display: block;
+          float: left;
+          margin: 10px 0 0 10px;
+          width: 200px;
+          height: 200px; }
     body .wrapper .main .aside {
       width: 300px;
       height: 100%;
@@ -273,4 +263,35 @@ body .wrapper {
         font-weight: 600;
         text-indent: 40px;
         line-height: 200%;
+        cursor: pointer; }
+    body .wrapper .main .pag {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-flow: row nowrap;
+         -moz-box-orient: horizontal;
+         -moz-box-direction: normal;
+          -ms-flex-flow: row nowrap;
+              flex-flow: row nowrap;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+         -moz-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      width: 852px;
+      height: 40px; }
+      body .wrapper .main .pag .left {
+        font-size: 20px;
+        cursor: pointer; }
+      body .wrapper .main .pag .right {
+        font-size: 20px;
         cursor: pointer; }

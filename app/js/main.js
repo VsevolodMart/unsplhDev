@@ -21,6 +21,9 @@ fetch('https://unsplash.it/list')
 		let Large;
 		let Medium;
 		let Small;
+		let leftArrow = document.querySelector('.left');
+		let rightArrow = document.querySelector('.right');
+		let num = document.querySelector('.num');
 		
 		
 		for (let i = 0; i < btn.length; i++) {
@@ -36,6 +39,8 @@ fetch('https://unsplash.it/list')
 		  }
 		  
 		}
+		
+		
 		
 		// function clearField() {
 		//   if (field.innerHTML != null) {
@@ -56,27 +61,32 @@ fetch('https://unsplash.it/list')
 			for(let i = 0; i < data.length; i++){
 			  widthArr.push(data[i].width);
 			  let array = data[i].filename;
-			  let start = array.split('.');
-			  let end = start[0].substring(5);
-			  imgArr.push(end);
+			  let end = array.split('.');
+			  let start = end[0].substring(5);
+			  imgArr.push(start);
 			}
 			
 			let j = 0;
-			
+			let count = 0;
 			for(let i = 0; i < imgArr.length; i++) {
-			  mainField = document.querySelector('.main');
-			  field = document.createElement('DIV');
-			  field.className = "field";
-			  //if(i > 2) break;
+			  console.log( 'count ' + count );
+			  if(count < 12){
+				mainField = document.querySelector('.mainField');
+				field = document.createElement('DIV');
+				field.className = "field";
+			  } else {
+				count = 0;
+				continue;
+				//if(i > 2) break
+			  }
 			  
-			  let count = 0;
 			  for(j ; j < imgArr.length; j++) {
 				if(count >= 12){
 				  break;
 				} else {
 				  img = document.createElement('IMG');
 				  img.src = 'https://source.unsplash.com/' + imgArr[j];
-				  mainField.insertBefore(field, aside);
+				  mainField.appendChild(field);
 				  field = document.querySelector('.field');
 				  field.appendChild(img);
 				  
@@ -87,12 +97,27 @@ fetch('https://unsplash.it/list')
 			  }
 			  if(j === imgArr.length) break;
 			  console.log(i);
+			  
 			}
 			
 		  });
 		}
 		randomShow();
-		
+	 
+		function pagination() {
+		  function toRight() {
+			let newStyles = document.createElement('style');
+			document.head.append(newStyles);
+			newStyles.innerHTML = ".field {" +
+			  "margin-left: 100px;" +
+			  "}"
+		  }
+		rightArrow.addEventListener('click', toRight)
+		}
+		pagination();
+	 
+	 
+	 
 		function sortLarge() {
 		  api.then(function (data) {
 			
