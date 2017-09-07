@@ -13,7 +13,8 @@
 body {
   .container{
     position: absolute;
-    display: block;
+    display: flex;
+    flex-flow: row wrap;
     top: 0px;
     text-align: center;
     background-color: rgba(0, 0, 0, 1);
@@ -30,9 +31,9 @@ body {
       //content: '&#10006';
     }
     img{
-
-
-
+      align-self: center;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
   .wrapper {
@@ -61,22 +62,18 @@ body {
       height: 100%;
       position: relative;
       .mainField {
-        overflow: hidden;
+        //overflow-y: hidden;
         border: 1px solid #1b1b1b;
         float: left;
         width: 852px;
         height: 646px;
         position: relative;
+        z-index: 100;
+        overflow: hidden;
         .field {
           position: absolute;
-          width: 100%;
+          width: 10000px;
           height: 646px;
-          transition: left 500ms linear;
-          display: block;
-          visibility: hidden;
-          &:first-child{
-            visibility: visible;
-          }
 
           //display: flex;
           //flex-flow: row wrap;

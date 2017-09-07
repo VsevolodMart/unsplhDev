@@ -1,8 +1,26 @@
 "use strict";
+function filter(size) {
+  let allBlocks = document.querySelectorAll("[data-size]");
+  // console.log(allBlocks);
+  for(let a in allBlocks){
+	
+	if(allBlocks.hasOwnProperty(a)){
+	  allBlocks[a].style.display = "none";
+	}
+	
+  }
+  
+  let blocks = document.querySelectorAll("[data-size="+size+"]");
+  for(let a in blocks){
+	if(blocks.hasOwnProperty(a)){
+	  blocks[a].style.display = "block";
+	}
+  }
+}
 
 fetch('https://unsplash.it/list')
   .then(
-	function(response) {
+	function (response) {
 	  if (response.status !== 200) {
 		console.log('Looks like there was a problem. Status Code: ' +
 		  response.status);
@@ -17,76 +35,150 @@ fetch('https://unsplash.it/list')
 		let img;
 		let aside = document.querySelector('.aside');
 		
-		let btn = document.getElementsByTagName('P');
-		let Large;
-		let Medium;
-		let Small;
+		// let btn = document.getElementsByTagName('P');
+		// let Large;
+		// let Medium;
+		// let Small;
 		let leftArrow = document.querySelector('.left');
 		let rightArrow = document.querySelector('.right');
 		let num = document.querySelector('.num');
 		
-		
-		for (let i = 0; i < btn.length; i++) {
-		  //console.log(btn);
-		  if (btn[i].innerHTML === 'Large') {
-			Large = btn[i];
-		  } else if (btn[i].innerHTML === 'Medium') {
-			Medium = btn[i];
-		  } else if (btn[i].innerHTML === 'Small') {
-			Small = btn[i];
-		  } else {
-			break
-		  }
-		  
-		}
-		
+		// for (let i = 0; i < btn.length; i++) {
+		//     //console.log(btn);
+		//     if (btn[i].innerHTML === 'Large') {
+		//         Large = btn[i];
+		//     } else if (btn[i].innerHTML === 'Medium') {
+		//         Medium = btn[i];
+		//     } else if (btn[i].innerHTML === 'Small') {
+		//         Small = btn[i];
+		//     } else {
+		//         break
+		//     }
+		//
+		// }
 		
 		
 		// test start
 		
 		api.then(function (data) {
 		  let imageArr = [];
+		  
 		  function random() {
-			
-			for (let l = 0; l < data.length; l++) {
-			  imageArr.push(data[l]);
-			}
-			
+			// console.log(data);
+			//  for (let l = 0; l < data.length; l++) {
+			//   imageArr.push(data[l]);
+			// }
+			imageArr = data.slice(0, 100);
 			let j = 0;
-			let count = 0 ;
+			let len = imageArr.length;
 			
-			for (let i = 0; i < imageArr.length; i++) {
-			  mainField = document.querySelector('.mainField');
-			  field = document.createElement('DIV');
-			  field.className = "field";
+			let mainField = document.querySelector('.mainField');
+			let field = document.createElement('DIV');
+			field.setAttribute('class', 'field');
+			let offset = 0;
+			
+			for (let i = 0; i < len; i++) {
+			  let currentImg = imageArr[i];
+			  let width = currentImg.width;
+			  let cut = currentImg.filename;
 			  
-			  for(j; j < imageArr.length; j++) {
-				let width = imageArr[j].width;
-				let cut = imageArr[j].filename;
-				cut = cut.split('.');
-				cut = cut[0].substring(5);
-				mainField.appendChild(field);
-				img = document.createElement('IMG');
-				img.src = 'https://source.unsplash.com/' + cut;
-				field = document.querySelector('.field');
-				img.setAttribute('class', 'img');
-				img.setAttribute('data-width', width);
-				field.appendChild(img);
-				if(count <= 12){
-				  count++;
-				  j = j++;
-				}
-				else {
-				  console.log(count);
-				  count = 0;
-				  break
-				}
-				console.log(j + ' j');
+			  cut = cut.split('.');
+			  cut = cut[0].substring(5);
+			  
+			  img = document.createElement('IMG');
+			  img.src = 'https://source.unsplash.com/' + cut;
+			  // field = document.querySelector('.field');
+			  img.setAttribute('class', 'img');
+			  let size = "medium";
+			  if(width > 1500){
+				size = "large";
+			  } else if(width < 799){
+				size = "small";
 			  }
-			  if(j === data.length) break;
-			  console.log('i ' + i);
+			  
+			  
+			  img.setAttribute('data-size', size);
+			  field.appendChild(img);
+			  mainField.appendChild(field);
+			  
+			  
+			  function pagination() {
+				let count = 0;
+				let pages = document.querySelectorAll('.field');
+				let numPage = document.querySelector('.num');
+				if (count < pages.length && count > pages.length) {
+				  return
+				} else {
+				  count++;
+				}
+				function toRight(event) {
+				  let elem = event.target;
+				  let pages = document.querySelectorAll('.field');
+				  
+				  if (event) {
+					
+					count++;
+					numPage.innerHTML = count;
+				  }
+				}
+				
+				rightArrow.addEventListener('click', toRight);
+				
+				function toleft(event) {
+				  let elem = event.target;
+				  let pages = document.querySelectorAll('.field');
+				  
+				  
+				  if (event) {
+					pages[count].style.visibility = 'hidden';
+					pages[count - 1].style.visibility = 'visible';
+					count--;
+					numPage.innerHTML = count;
+				  }
+				}
+				
+				leftArrow.addEventListener('click', toleft)
+			  }
+			  
+			  pagination();
+			  
+			  // if (offset >= len) break;
+			  //
+			  // field = document.createElement('DIV');
+			  // field.className = "field";
+			  //
+			  // for (j = 0; j < 12; j++) {
+			  //     if (offset >= len) break;
+			  //     let currentImg = imageArr[offset]
+			  //
+			  //
+			  //     let width = currentImg.width;
+			  //     let cut = currentImg.filename;
+			  //
+			  //     cut = cut.split('.');
+			  //     cut = cut[0].substring(5);
+			  //
+			  //     img = document.createElement('IMG');
+			  //     img.src = 'https://source.unsplash.com/' + cut;
+			  //     // field = document.querySelector('.field');
+			  //     img.setAttribute('class', 'img');
+			  //     let size = "medium"
+			  //     if(width > 1500){
+			  //         size = "large"
+			  //     } else if(width < 799){
+			  //         size = "small"
+			  //     }
+			  //
+			  //
+			  //     img.setAttribute('data-size', size);
+			  //     field.appendChild(img);
+			  //     offset++
+			  // }
+			  // mainField.appendChild(field);
+			  
 			}
 		  }
+		  
 		  random();
 		  
 		  function clearField() {
@@ -94,46 +186,48 @@ fetch('https://unsplash.it/list')
 			field.innerHTML = ' '
 		  }
 		  
-		  function showLarge() {
-		    clearField();
 		  
-			let j = 0;
-			let count = 0 ;
-			
-			for (let i = 0; i < imageArr.length; i++) {
-			  mainField = document.querySelector('.mainField');
-			  field = document.createElement('DIV');
-			  field.className = "field";
-			  for(j; j < imageArr.length; j++) {
-			    let width = imageArr[j].width;
-			    if(width > 1500){
-				  let cut = imageArr[j].filename;
-				  cut = cut.split('.');
-				  cut = cut[0].substring(5);
-				  mainField.appendChild(field);
-				  img = document.createElement('IMG');
-				  img.src = 'https://source.unsplash.com/' + cut;
-				  field = document.querySelector('.field');
-				  img.setAttribute('data-width', width);
-				  img.setAttribute('class', 'img');
-				  field.appendChild(img);
-				  if(count <= 12){
-					count++;
-					j = j++;
-				  } else {
-					console.log(count);
-					count = 0;
-					break
-				  }
-				  console.log(j + ' j');
-				}
-			  }
-			  if(j === data.length) break;
-			  console.log('i ' + i);
-			}
-		  }
-		  Large.addEventListener('click', showLarge);
 		  
+		  // function showLarge() {
+		  //     clearField();
+		  //
+		  //     let j = 0;
+		  //     let count = 0;
+		  //
+		  //     for (let i = 0; i < imageArr.length; i++) {
+		  //         mainField = document.querySelector('.mainField');
+		  //         field = document.createElement('DIV');
+		  //         field.className = "field";
+		  //         for (j; j < imageArr.length; j++) {
+		  //             let width = imageArr[j].width;
+		  //             if (width > 1500) {
+		  //                 let cut = imageArr[j].filename;
+		  //                 cut = cut.split('.');
+		  //                 cut = cut[0].substring(5);
+		  //                 mainField.appendChild(field);
+		  //                 img = document.createElement('IMG');
+		  //                 img.src = 'https://source.unsplash.com/' + cut;
+		  //                 field = document.querySelector('.field');
+		  //                 img.setAttribute('data-width', width);
+		  //                 img.setAttribute('class', 'img');
+		  //                 field.appendChild(img);
+		  //                 if (count <= 12) {
+		  //                     count++;
+		  //                     j = j++;
+		  //                 } else {
+		  //                     console.log(count);
+		  //                     count = 0;
+		  //                     break
+		  //                 }
+		  //                 console.log(j + ' j');
+		  //             }
+		  //         }
+		  //         if (j === data.length) break;
+		  //         console.log('i ' + i);
+		  //     }
+		  // }
+		  
+		  // Large.addEventListener('click', filter);
 		  
 		  
 		  let getField = document.querySelector('.field');
@@ -142,7 +236,7 @@ fetch('https://unsplash.it/list')
 			event.stopPropagation();
 			event.preventDefault();
 			let elem = event.target;
-			if(elem !== elem.parentNode){
+			if (elem !== elem.parentNode) {
 			  let getUrl = elem.getAttribute('SRC');
 			  let main = document.querySelector('body');
 			  let container = document.createElement('DIV');
@@ -171,7 +265,8 @@ fetch('https://unsplash.it/list')
 			}
 			
 		  }
-		  getField.addEventListener('click', showFull, false);
+		  
+		  //getField.addEventListener('click', showFull, false);
 		  //getField.removeEventListener('dbclick', showFull, false);
 		  
 		  let body = document.querySelector('body');
@@ -185,7 +280,7 @@ fetch('https://unsplash.it/list')
 		  }
 		  
 		  
-		  console.log(close);
+		  // console.log(close);
 		  
 		  document.addEventListener('DOMContentLoaded', function () {
 			close.addEventListener('click', removeFull, false);
@@ -197,126 +292,82 @@ fetch('https://unsplash.it/list')
 		
 		
 		// noinspection JSAnnotator
-		function pagination() {
-		  let count = 0;
-		  let pages = document.querySelectorAll('.field');
-		  let numPage = document.querySelector('.num');
-		  if(count < pages.length && count > pages.length){
-		    return
-		  } else {
-			count++;
-		  }
-		  function toRight(event) {
-			let elem = event.target;
-			let pages = document.querySelectorAll('.field');
-			
-			if(event){
-			  pages[count].style.visibility = 'visible';
-			  pages[count -1].style.visibility = 'hidden';
-			  count++;
-			  numPage.innerHTML = count;
-			}
-		  }
-		  rightArrow.addEventListener('click', toRight);
-		  
-		  function toleft(event) {
-			let elem = event.target;
-			let pages = document.querySelectorAll('.field');
-			
-			
-			if(event){
-			  pages[count].style.visibility = 'hidden';
-			  pages[count -1].style.visibility = 'visible';
-			  count--;
-			  numPage.innerHTML = count;
-			}
-		  }
-		  leftArrow.addEventListener('click', toleft)
-		}
-		pagination();
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
 		// function clearField() {
 		//   if (field.innerHTML != null) {
-		// 	return;
+		//     return;
 		//   } else {
-		// 	field.innerHTML = null;
+		//     field.innerHTML = null;
 		//   }
 		// }
 		
 		
 		// function randomShow() {
 		//   api.then(function (data) {
-		// 	let array = [];
-		// 	let imgArr = [];
-		// 	let authorArr = [];
-		// 	let heightArr = [];
-		// 	let widthArr = [];
-		// 	let idArr = [];
+		//     let array = [];
+		//     let imgArr = [];
+		//     let authorArr = [];
+		//     let heightArr = [];
+		//     let widthArr = [];
+		//     let idArr = [];
 		//
-		// 	for(let i = 0; i < data.length; i++){
-		// 	  widthArr.push(data[i].width);
-		// 	  let array = data[i].filename;
-		// 	  let end = array.split('.');
-		// 	  let start = end[0].substring(5);
-		// 	  imgArr.push(start);
-		// 	  console.log(imgArr[i] + '  - ' + i);
-		// 	}
+		//     for(let i = 0; i < data.length; i++){
+		//       widthArr.push(data[i].width);
+		//       let array = data[i].filename;
+		//       let end = array.split('.');
+		//       let start = end[0].substring(5);
+		//       imgArr.push(start);
+		//       console.log(imgArr[i] + '  - ' + i);
+		//     }
 		//
 		//
-		// 	//loop start
-		// 	let j = 0;
-		// 	let count = 0;
-		// 	for(let i = 0; i < imgArr.length; i++) {
-		// 	  console.log( 'count ' + count );
+		//     //loop start
+		//     let j = 0;
+		//     let count = 0;
+		//     for(let i = 0; i < imgArr.length; i++) {
+		//       console.log( 'count ' + count );
 		//
-		// 	  if(count < 12){
-		// 		mainField = document.querySelector('.mainField');
-		// 		field = document.createElement('DIV');
-		// 		field.className = "field";
-		// 	  } else {
-		// 		count = 0;
-		// 		continue;
-		// 	  }
+		//       if(count < 12){
+		//        mainField = document.querySelector('.mainField');
+		//        field = document.createElement('DIV');
+		//        field.className = "field";
+		//       } else {
+		//        count = 0;
+		//        continue;
+		//       }
 		//
-		// 	  for(j ; j < imgArr.length; j++) {
-		// 		if(count >= 12){
-		// 		  break;
-		// 		} else {
-		// 		  img = document.createElement('IMG');
-		// 		  img.src = 'https://source.unsplash.com/' + imgArr[j];
-		// 		  mainField.appendChild(field);
-		// 		  field = document.querySelector('.field');
-		// 		  field.appendChild(img);
-		// 		  count++;
-		// 		  j = j++;
-		// 		}
-		// 		console.log('j ' + j);
-		// 	  }
+		//       for(j ; j < imgArr.length; j++) {
+		//        if(count >= 12){
+		//          break;
+		//        } else {
+		//          img = document.createElement('IMG');
+		//          img.src = 'https://source.unsplash.com/' + imgArr[j];
+		//          mainField.appendChild(field);
+		//          field = document.querySelector('.field');
+		//          field.appendChild(img);
+		//          count++;
+		//          j = j++;
+		//        }
+		//        console.log('j ' + j);
+		//       }
 		//
-		// 	  if(j === imgArr.length) break;
-		// 	  console.log(i);
-		// 	}
-		// 	//loo end
+		//       if(j === imgArr.length) break;
+		//       console.log(i);
+		//     }
+		//     //loo end
 		//   });
 		// }
 		// randomShow();
 		
 		// function pagination() {
 		//   function toRight() {
-		// 	let newStyles = document.createElement('style');
-		// 	document.head.append(newStyles);
-		// 	newStyles.innerHTML = ".field {" +
-		// 	  "margin-left: 100px;" +
-		// 	  "}"
+		//     let newStyles = document.createElement('style');
+		//     document.head.append(newStyles);
+		//     newStyles.innerHTML = ".field {" +
+		//       "margin-left: 100px;" +
+		//       "}"
 		//   }
 		//   rightArrow.addEventListener('click', toRight)
 		// }
@@ -324,140 +375,140 @@ fetch('https://unsplash.it/list')
 		
 		//
 		//
-		// 	function sortLarge() {
-		// 	  api.then(function (data) {
+		//     function sortLarge() {
+		//       api.then(function (data) {
 		//
 		//
-		// 		//clearField();
+		//        //clearField();
 		//
-		// 		let imgArr = [];
-		// 		let authorArr = [];
-		// 		let heightArr = [];
-		// 		let widthArr = [];
-		// 		let idArr = [];
+		//        let imgArr = [];
+		//        let authorArr = [];
+		//        let heightArr = [];
+		//        let widthArr = [];
+		//        let idArr = [];
 		//
-		// 		for (let i in data) {
+		//        for (let i in data) {
 		//
-		// 		  if (data[i].width >= 1500) {
-		// 			widthArr.push(data[i].width);
-		// 			let array = data[i].filename;
-		// 			let start = array.split('.');
-		// 			let end = start[0].split('_');
-		// 			imgArr.push(end[1]);
-		// 			let fileName = imgArr[i];
-		// 			console.log(imgArr[i]);
+		//          if (data[i].width >= 1500) {
+		//           widthArr.push(data[i].width);
+		//           let array = data[i].filename;
+		//           let start = array.split('.');
+		//           let end = start[0].split('_');
+		//           imgArr.push(end[1]);
+		//           let fileName = imgArr[i];
+		//           console.log(imgArr[i]);
 		//
-		// 			if (i >= 12) {
-		// 			  break;
-		// 			} else if (response.status != 200) {
-		// 			  return;
-		// 			} else {
-		// 			  field = document.querySelector('.field');
-		// 			  img = document.createElement('IMG');
-		// 			  img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
-		// 			  field.appendChild(img);
-		// 			}
-		// 		  } else {
-		// 			return;
-		// 		  }
-		// 		}
+		//           if (i >= 12) {
+		//             break;
+		//           } else if (response.status != 200) {
+		//             return;
+		//           } else {
+		//             field = document.querySelector('.field');
+		//             img = document.createElement('IMG');
+		//             img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
+		//             field.appendChild(img);
+		//           }
+		//          } else {
+		//           return;
+		//          }
+		//        }
 		//
-		// 	  });
+		//       });
 		//
-		// 	}
+		//     }
 		//
-		// 	Large.addEventListener('click', sortLarge);
-		// 	function sortMedium() {
-		// 	  api.then(function (data) {
+		//     Large.addEventListener('click', sortLarge);
+		//     function sortMedium() {
+		//       api.then(function (data) {
 		//
-		// 		//clearField();
-		// 		console.log('func');
-		// 		let imgArr = [];
-		// 		let authorArr = [];
-		// 		let heightArr = [];
-		// 		let widthArr = [];
-		// 		let idArr = [];
+		//        //clearField();
+		//        console.log('func');
+		//        let imgArr = [];
+		//        let authorArr = [];
+		//        let heightArr = [];
+		//        let widthArr = [];
+		//        let idArr = [];
 		//
-		// 		for (let i in data) {
+		//        for (let i in data) {
 		//
-		// 		  if (data[i].width >= 800 || data[i].width <= 1499) {
-		// 			console.log('size');
-		// 			widthArr.push(data[i].width);
-		// 			let array = data[i].filename;
-		// 			let start = array.split('.');
-		// 			let end = start[0].split('_');
-		// 			imgArr.push(end[1]);
+		//          if (data[i].width >= 800 || data[i].width <= 1499) {
+		//           console.log('size');
+		//           widthArr.push(data[i].width);
+		//           let array = data[i].filename;
+		//           let start = array.split('.');
+		//           let end = start[0].split('_');
+		//           imgArr.push(end[1]);
 		//
-		// 			let fileName = imgArr[i];
+		//           let fileName = imgArr[i];
 		//
-		// 			if (i >= 12) {
-		// 			  break;
-		// 			} else if (response.status != 200) {
-		// 			  return;
-		// 			} else {
-		// 			  field = document.querySelector('.field');
-		// 			  img = document.createElement('IMG');
-		// 			  img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
-		// 			  field.appendChild(img);
-		// 			}
-		// 		  } else {
-		// 			return;
-		// 		  }
-		// 		}
+		//           if (i >= 12) {
+		//             break;
+		//           } else if (response.status != 200) {
+		//             return;
+		//           } else {
+		//             field = document.querySelector('.field');
+		//             img = document.createElement('IMG');
+		//             img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
+		//             field.appendChild(img);
+		//           }
+		//          } else {
+		//           return;
+		//          }
+		//        }
 		//
-		// 	  });
+		//       });
 		//
-		// 	}
+		//     }
 		//
 		//
-		// 	Medium.addEventListener('click', sortMedium);
+		//     Medium.addEventListener('click', sortMedium);
 		//
-		// 	function sortSmall() {
-		// 	  api.then(function (data) {
+		//     function sortSmall() {
+		//       api.then(function (data) {
 		//
-		// 		//clearField();
-		// 		console.log('func');
-		// 		let imgArr = [];
-		// 		let authorArr = [];
-		// 		let heightArr = [];
-		// 		let widthArr = [];
-		// 		let idArr = [];
+		//        //clearField();
+		//        console.log('func');
+		//        let imgArr = [];
+		//        let authorArr = [];
+		//        let heightArr = [];
+		//        let widthArr = [];
+		//        let idArr = [];
 		//
-		// 		for (let i in data) {
-		// 		  console.log('loop');
-		// 		  console.log(data[i]);
-		// 		  if (data[i].width < 799) {
-		// 			console.log('size');
-		// 			widthArr.push(data[i].width);
-		// 			let array = data[i].filename;
-		// 			let start = array.split('.');
-		// 			let end = start[0].split('_');
-		// 			imgArr.push(end[1]);
-		// 			let fileName = imgArr[i];
-		// 			console.log(imgArr[i]);
+		//        for (let i in data) {
+		//          console.log('loop');
+		//          console.log(data[i]);
+		//          if (data[i].width < 799) {
+		//           console.log('size');
+		//           widthArr.push(data[i].width);
+		//           let array = data[i].filename;
+		//           let start = array.split('.');
+		//           let end = start[0].split('_');
+		//           imgArr.push(end[1]);
+		//           let fileName = imgArr[i];
+		//           console.log(imgArr[i]);
 		//
-		// 			if (i >= 12) {
-		// 			  break;
-		// 			} else if (response.status != 200) {
-		// 			  return;
-		// 			} else {
-		// 			  field = document.querySelector('.field');
-		// 			  img = document.createElement('IMG');
-		// 			  img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
-		// 			  field.appendChild(img);
-		// 			}
-		// 		  } else {
+		//           if (i >= 12) {
+		//             break;
+		//           } else if (response.status != 200) {
+		//             return;
+		//           } else {
+		//             field = document.querySelector('.field');
+		//             img = document.createElement('IMG');
+		//             img.src = 'https://source.unsplash.com/' + widthArr[i] + fileName;
+		//             field.appendChild(img);
+		//           }
+		//          } else {
 		//
-		// 			return;
-		// 		  }
-		// 		}
+		//           return;
+		//          }
+		//        }
 		//
-		// 	  });
-		// 	}
+		//       });
+		//     }
 		//
-		// 	Small.addEventListener('click', sortSmall);
+		//     Small.addEventListener('click', sortSmall);
 	  }
 	})
-  .catch(function(err) {
+  .catch(function (err) {
 	console.log('Erorr', err);
   });
