@@ -45,9 +45,8 @@ fetch('https://unsplash.it/list')
 		// test start
 		
 		api.then(function (data) {
-		  
+		  let imageArr = [];
 		  function random() {
-			let imageArr = [];
 			
 			for (let l = 0; l < data.length; l++) {
 			  imageArr.push(data[l]);
@@ -62,6 +61,7 @@ fetch('https://unsplash.it/list')
 			  field.className = "field";
 			  
 			  for(j; j < imageArr.length; j++) {
+				let width = imageArr[j].width;
 				let cut = imageArr[j].filename;
 				cut = cut.split('.');
 				cut = cut[0].substring(5);
@@ -70,6 +70,7 @@ fetch('https://unsplash.it/list')
 				img.src = 'https://source.unsplash.com/' + cut;
 				field = document.querySelector('.field');
 				img.setAttribute('class', 'img');
+				img.setAttribute('data-width', width);
 				field.appendChild(img);
 				if(count <= 12){
 				  count++;
@@ -85,10 +86,55 @@ fetch('https://unsplash.it/list')
 			  if(j === data.length) break;
 			  console.log('i ' + i);
 			}
-			
+		  }
+		  random();
+		  
+		  function clearField() {
+			field = document.querySelector('.field');
+			field.innerHTML = ' '
 		  }
 		  
-		  random();
+		  function showLarge() {
+		    clearField();
+		  
+			let j = 0;
+			let count = 0 ;
+			
+			for (let i = 0; i < imageArr.length; i++) {
+			  mainField = document.querySelector('.mainField');
+			  field = document.createElement('DIV');
+			  field.className = "field";
+			  for(j; j < imageArr.length; j++) {
+			    let width = imageArr[j].width;
+			    if(width > 1500){
+				  let cut = imageArr[j].filename;
+				  cut = cut.split('.');
+				  cut = cut[0].substring(5);
+				  mainField.appendChild(field);
+				  img = document.createElement('IMG');
+				  img.src = 'https://source.unsplash.com/' + cut;
+				  field = document.querySelector('.field');
+				  img.setAttribute('data-width', width);
+				  img.setAttribute('class', 'img');
+				  field.appendChild(img);
+				  if(count <= 12){
+					count++;
+					j = j++;
+				  } else {
+					console.log(count);
+					count = 0;
+					break
+				  }
+				  console.log(j + ' j');
+				}
+			  }
+			  if(j === data.length) break;
+			  console.log('i ' + i);
+			}
+		  }
+		  Large.addEventListener('click', showLarge);
+		  
+		  
 		  
 		  let getField = document.querySelector('.field');
 		  
@@ -154,10 +200,12 @@ fetch('https://unsplash.it/list')
 		function pagination() {
 		  let count = 0;
 		  let pages = document.querySelectorAll('.field');
+		  let numPage = document.querySelector('.num');
 		  if(count < pages.length && count > pages.length){
 		    return
+		  } else {
+			count++;
 		  }
-		  count++;
 		  function toRight(event) {
 			let elem = event.target;
 			let pages = document.querySelectorAll('.field');
@@ -166,9 +214,8 @@ fetch('https://unsplash.it/list')
 			  pages[count].style.visibility = 'visible';
 			  pages[count -1].style.visibility = 'hidden';
 			  count++;
+			  numPage.innerHTML = count;
 			}
-			
-			
 		  }
 		  rightArrow.addEventListener('click', toRight);
 		  
@@ -176,10 +223,12 @@ fetch('https://unsplash.it/list')
 			let elem = event.target;
 			let pages = document.querySelectorAll('.field');
 			
+			
 			if(event){
 			  pages[count].style.visibility = 'hidden';
 			  pages[count -1].style.visibility = 'visible';
 			  count--;
+			  numPage.innerHTML = count;
 			}
 		  }
 		  leftArrow.addEventListener('click', toleft)
