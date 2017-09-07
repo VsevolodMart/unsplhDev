@@ -11,6 +11,30 @@
   clear: both;
 }
 body {
+  .container{
+    position: absolute;
+    display: block;
+    top: 0px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 1);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    .i{
+      position: absolute;
+      color: white;
+      font-size: 36px;
+      top: 40px;
+      right: 52px;
+      cursor: pointer;
+      //content: '&#10006';
+    }
+    img{
+
+
+
+    }
+  }
   .wrapper {
     width: 1200px;
     margin-left: auto;
@@ -43,12 +67,17 @@ body {
         width: 852px;
         height: 646px;
         position: relative;
-
         .field {
-          position: relative;
+          position: absolute;
           width: 100%;
           height: 646px;
           transition: left 500ms linear;
+          display: block;
+          visibility: hidden;
+          &:first-child{
+            visibility: visible;
+          }
+
           //display: flex;
           //flex-flow: row wrap;
           //justify-content: space-between;

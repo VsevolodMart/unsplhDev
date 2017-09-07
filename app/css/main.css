@@ -170,6 +170,23 @@ button {
   content: ' ';
   clear: both; }
 
+body .container {
+  position: absolute;
+  display: block;
+  top: 0px;
+  text-align: center;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 999; }
+  body .container .i {
+    position: absolute;
+    color: white;
+    font-size: 36px;
+    top: 40px;
+    right: 52px;
+    cursor: pointer; }
+
 body .wrapper {
   width: 1200px;
   margin-left: auto;
@@ -213,13 +230,17 @@ body .wrapper {
       height: 646px;
       position: relative; }
       body .wrapper .main .mainField .field {
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 646px;
         -webkit-transition: left 500ms linear;
         -o-transition: left 500ms linear;
         -moz-transition: left 500ms linear;
-        transition: left 500ms linear; }
+        transition: left 500ms linear;
+        display: block;
+        visibility: hidden; }
+        body .wrapper .main .mainField .field:first-child {
+          visibility: visible; }
         body .wrapper .main .mainField .field img {
           display: block;
           float: left;
