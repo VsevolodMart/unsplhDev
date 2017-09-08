@@ -20,20 +20,28 @@
           <div class="size">
             <h3 class="h">Size</h3>
             <ul>
-              <li><a href="#">Large</a></li>
-              <li><a href="#">Medium</a></li>
-              <li><a href="#">Small</a></li>
+              <li>All
+                <input type="radio" checked="checked" name="size" value=""/>
+              </li>
+              <li>Large
+                <input type="radio" name="size" value="large"/>
+              </li>
+              <li>Medium
+                <input type="radio" name="size" value="medium"/>
+              </li>
+              <li>Small
+                <input type="radio" name="size" value="small"/>
+              </li>
             </ul>
           </div>
           <div class="author">
             <h3 class="h">Author</h3>
-            <p>Author</p>
           </div>
         </aside>
         <div class="pag">
-          <div class="left"><</div>
+          <div class="left" onclick="pagination('l')"><</div>
           <div class="num"></div>
-          <div class="right">></div>
+          <div class="right" onclick="pagination('r')">></div>
         </div>
       </main>
     </div>

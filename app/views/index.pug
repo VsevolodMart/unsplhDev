@@ -19,19 +19,20 @@ html(lang="en")
           .size
             h3.h Size
             ul
-              li
-                a(href="#") Large
-              li
-                a(href="#") Medium
-              li
-                a(href="#") Small
+              li All
+                input(type="radio" checked="checked" name="size" value="")
+              li Large
+                input(type="radio" name="size" value="large")
+              li Medium
+                input(type="radio" name="size" value="medium")
+              li Small
+                input(type="radio" name="size" value="small")
           .author
             h3.h Author
-            p Author
         .pag
-          .left <
+          .left(onclick="pagination('l')") <
           .num
-          .right >
+          .right(onclick="pagination('r')") >
 
     script(src="js/main.js")
 

@@ -1,17 +1,36 @@
 
-    //Roboto-Regular
+//Roboto-Regular
 $Roboto-Regular: 'Roboto-Regular';
 $Roboto-RegularPath: '../../fonts/Roboto-Regular';
 
 
-    //Roboto-Bold
+//Roboto-Bold
 $Roboto-Bold: 'Roboto-Bold';
 $Roboto-BoldPath: '../../fonts/Roboto-Bold';
 
-    //Roboto-Medium
+//Roboto-Medium
 $Roboto-Medium: 'Roboto-Medium';
 $Roboto-MediumPath: '../../fonts/Roboto-Medium';
 
+//Roboto-Medium
+$CaveatBrush-Regular: 'CaveatBrush-Regular';
+$CaveatBrush-RegularPath: '../../fonts/CaveatBrush-Regular';
+
+@mixin CaveatBrush-Regular($CaveatBrush-Regular, $CaveatBrush-RegularPath) {
+  @font-face {
+    font: {
+      family: $CaveatBrush-Regular;
+      weight: normal;
+      style: normal;
+    }
+    src: url('#{$CaveatBrush-RegularPath}.eot'); //IE9 Compat Modes
+    src: url('#{$CaveatBrush-RegularPath}.eot?#iefix') format('embedded-opentype'), //IE6-IE8
+    url('#{$CaveatBrush-RegularPath}.woff') format('woff'), //Modern Browsers
+    url('#{$CaveatBrush-RegularPath}.woff2') format('woff2'), //Modern Browsers
+    url('#{$CaveatBrush-RegularPath}.ttf') format('truetype'), //Safari, Android, iOS
+    url('#{$CaveatBrush-RegularPath}.svg##{$CaveatBrush-Regular}') format('svg'); //Old iOS devices
+  }
+}
 
 @mixin Roboto-Regular($Roboto-Regular, $Roboto-RegularPath) {
   @font-face {
@@ -61,6 +80,7 @@ $Roboto-MediumPath: '../../fonts/Roboto-Medium';
 }
 
 
+@include Roboto-Regular($CaveatBrush-Regular, $CaveatBrush-RegularPath);
 @include Roboto-Regular($Roboto-Regular, $Roboto-RegularPath);
 @include Roboto-Medium($Roboto-Medium, $Roboto-MediumPath);
 @include Roboto-Bold($Roboto-Bold, $Roboto-BoldPath);
